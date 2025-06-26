@@ -1,0 +1,159 @@
+
+[
+  {
+    "dental_issue": "Odontogenic infections / Dental abscess",
+    "antibiotics": ["Amoxicillin", "Amox + Clavulanate", "Metronidazole (add-on if anaerobic signs)"],
+    "brands": ["Amoxil", "Mox", "Cipla Amox", "Augmentin", "Clavam", "Amoxclav", "Metrogyl", "Flagyl"],
+    "dosage": [
+      "500mg TID (or 875mg mg BID)",
+      "875/125 mg BID (or 500/125 mg TID)",
+      "400 mg TID"
+    ],
+    "duration": "5 days (extend to 7 if severe)",
+    "rules": "Drainage/extraction always first; antibiotics adjunctive only with systemic signs"
+  },
+  {
+    "dental_issue": "Periodontal abscess",
+    "antibiotics": ["Amoxicillin", "Metronidazole (combo)"],
+    "brands": ["Amoxil", "Mox", "Metrogyl"],
+    "dosage": ["500 mg TID", "400 mg TID"],
+    "duration": "5 days",
+    "rules": "Must combine with periodontal drainage/scaling"
+  },
+  {
+    "dental_issue": "ANUG / Ulcerative gingivitis",
+    "antibiotics": ["Metronidazole", "Amoxicillin (if systemic)"],
+    "brands": ["Metrogyl", "Amoxil"],
+    "dosage": ["400 mg TID", "500 mg TID"],
+    "duration": "5–7 days",
+    "rules": "Only if fever/lymphadenopathy present"
+  },
+  {
+    "dental_issue": "Aggressive periodontitis",
+    "antibiotics": ["Amoxicillin + Metronidazole (dual)"],
+    "brands": ["Amoxil + Metrogyl"],
+    "dosage": ["500 mg TID + 400 mg TID"],
+    "duration": "7 days",
+    "rules": "Use adjunctive to scaling/root planing"
+  },
+  {
+    "dental_issue": "Chronic periodontitis (systemic)",
+    "antibiotics": ["Doxycycline (alternative)", "Amoxicillin + Metronidazole"],
+    "brands": ["Doxicip", "Vibramycin", "Amoxil + Metrogyl"],
+    "dosage": ["100 mg OD for 14 days", "500 mg TID + 400 mg TID"],
+    "duration": "7–14 days",
+    "rules": "Reserve for Grade C or refractory cases"
+  },
+  {
+    "dental_issue": "Pericoronitis",
+    "antibiotics": ["Amoxicillin", "Metronidazole (add-on)"],
+    "brands": ["Amoxil", "Metrogyl"],
+    "dosage": ["500 mg TID", "400 mg TID"],
+    "duration": "5–7 days",
+    "rules": "Combine with local irrigation and operculectomy if needed"
+  },
+  {
+    "dental_issue": "Cellulitis / Fascial-space infections",
+    "antibiotics": ["Amoxicillin + Clavulanate", "Metronidazole", "Clindamycin (PCN-allergic)"],
+    "brands": ["Augmentin", "Metrogyl", "Dalacin C"],
+    "dosage": ["875/125 mg BID + 400 mg TID", "300 mg Q6h"],
+    "duration": "7–10 days",
+    "rules": "IV therapy if airway risk; always image and drain"
+  },
+  {
+    "dental_issue": "Alveolar osteitis (dry socket)",
+    "antibiotics": ["No routine antibiotics", "If secondary infection: Amoxicillin"],
+    "brands": ["Amoxil"],
+    "dosage": ["500 mg TID"],
+    "duration": "5 days",
+    "rules": "Focus on local intra-socket dressing; antibiotics only if swelling/fever"
+  },
+  {
+    "dental_issue": "Osteomyelitis of jaws",
+    "antibiotics": ["Penicillin G (IV)", "Amoxicillin + Clavulanate", "Clindamycin (allergy)"],
+    "brands": ["Wockhardt Pen G", "Augmentin", "Dalacin C"],
+    "dosage": ["2-4 MU IV Q4–6h + 1g TID", "875/125 mg BID", "600 mg Q8h"],
+    "duration": "4–6 weeks",
+    "rules": "Surgical debridement + prolonged IV→PO switch"
+  },
+  {
+    "dental_issue": "Actinomycosis (lumpy-jaw)",
+    "antibiotics": ["Penicillin V/G", "Doxycycline (alternative)"],
+    "brands": ["Wockhardt Pen G", "Doxicip"],
+    "dosage": ["2-4 MU IV Q6h → 2g PO QID"],
+    "duration": "6–12 months",
+    "rules": "Long-term therapy until radiographic resolution"
+  },
+  {
+    "dental_issue": "Peri-implant infections",
+    "antibiotics": ["Amoxicillin", "Metronidazole (add-on)"],
+    "brands": ["Amoxil", "Metrogyl"],
+    "dosage": ["500 mg TID", "400 mg TID"],
+    "duration": "7 days",
+    "rules": "Always combine with mechanical debridement"
+  },
+  {
+    "dental_issue": "Osteoradionecrosis",
+    "antibiotics": ["Amoxicillin + Clavulanate", "Clindamycin"],
+    "brands": ["Augmentin", "Dalacin C"],
+    "dosage": ["875/125 mg BID", "300 mg Q6h"],
+    "duration": "4–6 weeks",
+    "rules": "Hyperbaric O₂ + surgical care often required"
+  },
+  {
+    "dental_issue": "MRONJ",
+    "antibiotics": ["Amoxicillin + Clavulanate", "Clindamycin"],
+    "brands": ["Augmentin", "Dalacin C"],
+    "dosage": ["875/125 mg BID", "300 mg Q6h"],
+    "duration": "2–6 weeks",
+    "rules": "Dental clearance before antiresorptive therapy"
+  },
+  {
+    "dental_issue": "Suppurative sialadenitis",
+    "antibiotics": ["Dicloxacillin / Flucloxacillin", "Clindamycin (allergy)"],
+    "brands": ["Dynapen", "Dalacin C"],
+    "dosage": ["500 mg QID", "300 mg Q6h"],
+    "duration": "7–10 days",
+    "rules": "Sialogogues & gland massage essential"
+  },
+  {
+    "dental_issue": "Odontogenic sinusitis",
+    "antibiotics": ["Amoxicillin + Clavulanate", "Doxycycline (PCN-allergy)"],
+    "brands": ["Augmentin", "Vibramycin"],
+    "dosage": ["875/125 mg BID", "100 mg OD"],
+    "duration": "10–14 days",
+    "rules": "ENT referral + sinus irrigation"
+  },
+  {
+    "dental_issue": "Traumatic bacteremias (bites, lacerations)",
+    "antibiotics": ["Amoxicillin + Clavulanate", "Clindamycin (allergy)"],
+    "brands": ["Augmentin", "Dalacin C"],
+    "dosage": ["875/125 mg BID", "300 mg Q6h"],
+    "duration": "5–7 days",
+    "rules": "Tetanus prophylaxis, debridement"
+  },
+  {
+    "dental_issue": "Prophylaxis for infective endocarditis",
+    "antibiotics": ["Amoxicillin", "Clindamycin (PCN-allergy)"],
+    "brands": ["Amoxil", "Dalacin C"],
+    "dosage": ["2g PO 1h before", "600 mg PO 1h before"],
+    "duration": "Single dose",
+    "rules": "Only high-risk cardiac lesions (per AHA)"
+  },
+  {
+    "dental_issue": "Prophylaxis for prosthetic joints",
+    "antibiotics": ["Amoxicillin", "Clindamycin (PCN-allergy)"],
+    "brands": ["Amoxil", "Dalacin C"],
+    "dosage": ["2g PO 1h before", "600 mg PO 1h before"],
+    "duration": "Single dose",
+    "rules": "First 2 years post-op or immunocompromised"
+  },
+  {
+    "dental_issue": "Impacted Mandibular Third Molars",
+    "antibiotics": ["Amoxicillin", "Clindamycin (PCN-allergy)"],
+    "brands": ["Amoxil", "Dalacin C"],
+    "dosage": ["2g PO 1h before", "600 mg PO 1h before"],
+    "duration": "Single dose",
+    "rules": "Neutropenia, asplenia, HIV with low CD4+"
+  }
+] 
