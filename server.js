@@ -27,9 +27,29 @@ if (process.env.NODE_ENV === 'production') {
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
-app.use(cors()); // Enable CORS for frontend communication
 
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Add restrictive CORS for Vercel frontend only
+const allowedOrigins = [
+  'https://uploadory-results-git-dev-bhav11eshs-projects.vercel.app',
+  'http://www.dentifrice.in',
+  'https://uploadory-results-git-main-bhav11eshs-projects.vercel.app',
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 // Supabase setup
 const supabaseUrl = 'https://egknfpmtqfmujnnrqcuk.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVna25mcG10cWZtdWpubnJxY3VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk1NDEwMjMsImV4cCI6MjA0NTExNzAyM30.rCeOiqLc_f3ReRskAE0MfNp_1ObTxckZY7HJBHANneI';
