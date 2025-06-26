@@ -55,7 +55,12 @@ try {
   console.log('Using service account:', credentials.client_email);
   
   // Set the environment variable for Google Application Credentials
-  process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(process.cwd(), 'vertex_vikram_key_google_account.json');
+  if (process.env.VERTEX_JSON_BASE64) {
+    const credsPath = path.join(process.cwd(), 'vertex_credentials.json');
+    const decoded = Buffer.from(process.env.VERTEX_JSON_BASE64, 'base64').toString('utf8');
+    fs.writeFileSync(credsPath, decoded);
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = credsPath;
+  }
   
   vertexAI = new VertexAI({
     project,
