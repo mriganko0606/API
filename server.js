@@ -46,22 +46,16 @@ let vertexAI;
 let generativeVisionModel;
 
 try {
-  const credentials = getVertexCredentials();
-  if (!credentials) {
-    throw new Error('Failed to load Google Cloud credentials');
-  }
-
-  console.log('Initializing Vertex AI with project:', project);
-  console.log('Using service account:', credentials.client_email);
-  
-  // Set the environment variable for Google Application Credentials
   if (process.env.VERTEX_JSON_BASE64) {
     const credsPath = path.join(process.cwd(), 'vertex_credentials.json');
     const decoded = Buffer.from(process.env.VERTEX_JSON_BASE64, 'base64').toString('utf8');
     fs.writeFileSync(credsPath, decoded);
     process.env.GOOGLE_APPLICATION_CREDENTIALS = credsPath;
+    console.log('Service account credentials written to vertex_credentials.json');
+  } else {
+    throw new Error('VERTEX_JSON_BASE64 not set — cannot load credentials');
   }
-  
+
   vertexAI = new VertexAI({
     project,
     location
@@ -101,7 +95,6 @@ try {
       }
     ]
   };
-  
   await generativeVisionModel.generateContent(testRequest);
   console.log('Vertex AI initialization and connection test successful');
 } catch (error) {
