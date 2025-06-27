@@ -34,6 +34,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 const allowedOrigins = [
   'https://uploadory-results-git-dev-bhav11eshs-projects.vercel.app',
   'http://www.dentifrice.in',
+  'https://www.dentifrice.in',
   'https://uploadory-results-git-main-bhav11eshs-projects.vercel.app',
 ];
 
