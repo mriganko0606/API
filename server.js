@@ -8,16 +8,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getVertexCredentials } from './credentials.js';
 import fs from 'fs';
-import app from 'express';
-import bodyParser from 'body-parser';
-
 
 // Get directory name for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
-app.use(express.json({ limit: "50mb", extended: true, parameterLimit: 50000 }))
+const app = express();
+app.use(express.json()); // Middleware to parse JSON
+app.use(express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
 // Load environment variables
 // Load environment variables based on NODE_ENV
@@ -29,11 +27,6 @@ if (process.env.NODE_ENV === 'production') {
   dotenv.config();
   console.log('Running in development mode');
 }
-
-const app = express();
-app.use(express.json()); // Middleware to parse JSON
-
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Add restrictive CORS for Vercel frontend only
 const allowedOrigins = [
