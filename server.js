@@ -8,6 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getVertexCredentials } from './credentials.js';
 import fs from 'fs';
+import app from 'express';
+import bodyParser from 'body-parser';
 
 
 // Get directory name for ES modules
