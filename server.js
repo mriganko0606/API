@@ -179,8 +179,15 @@ ${Object.entries(formData.dentalHistory || {})
 `;
 };
 
+// Log all incoming requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // API Route: Analyze X-ray Image
 app.post('/api/analyze-xray', async (req, res) => {
+  console.log('Endpoint hit: /api/analyze-xray');
   try {
     if (!generativeVisionModel) {
       throw new Error('Vertex AI is not properly initialized. Please check your Google Cloud credentials.');
@@ -305,6 +312,7 @@ app.post('/api/analyze-xray', async (req, res) => {
 
 // Add Gemini chat endpoint directly
 app.post('/api/gemini-chat', async (req, res) => {
+  console.log('Endpoint hit: /api/gemini-chat');
   const { message } = req.body;
   console.log('Received message:', message);
   if (!message) {
