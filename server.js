@@ -114,7 +114,12 @@ try {
       }
     ]
   };
-  await generativeVisionModel.generateContent(testRequest);
+  await generativeVisionModel.generateContent(testRequest, {
+    generationConfig: {
+      temperature: 0.2,
+      topP: 0.8
+    }
+  });
   console.log('Vertex AI initialization and connection test successful');
 } catch (error) {
   console.error('Error initializing Vertex AI:', {
@@ -220,7 +225,12 @@ app.post('/api/analyze-xray', async (req, res) => {
         },
       ],
     };
-    const reportResponse = await generativeVisionModel.generateContent(reportRequest);
+    const reportResponse = await generativeVisionModel.generateContent(reportRequest, {
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.8
+      }
+    });
     if (!reportResponse.response || !reportResponse.response.candidates || reportResponse.response.candidates.length === 0) {
       throw new Error('No response candidates received from the model.');
     }
@@ -237,7 +247,12 @@ app.post('/api/analyze-xray', async (req, res) => {
         },
       ],
     };
-    const diseaseResponse = await generativeVisionModel.generateContent(diseaseRequest);
+    const diseaseResponse = await generativeVisionModel.generateContent(diseaseRequest, {
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.8
+      }
+    });
     if (!diseaseResponse.response || !diseaseResponse.response.candidates || diseaseResponse.response.candidates.length === 0) {
       throw new Error('No response candidates received for disease extraction.');
     }
@@ -304,7 +319,12 @@ app.post('/api/gemini-chat', async (req, res) => {
         { role: 'user', parts: [{ text: message }] },
       ],
     };
-    const response = await generativeVisionModel.generateContent(chatRequest);
+    const response = await generativeVisionModel.generateContent(chatRequest, {
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.8
+      }
+    });
     const aiText = response.response?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.';
     res.json({ reply: aiText });
   } catch (error) {
