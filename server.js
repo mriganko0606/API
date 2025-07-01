@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
 // Add restrictive CORS for Vercel frontend only
 const allowedOrigins = [
   'https://uploadory-results-git-dev-bhav11eshs-projects.vercel.app',
-  'http://www.dentifrice.in',
+  'https://www.dentifrice.in',
   'https://www.dentifrice.in',
   'https://uploadory-results-git-main-bhav11eshs-projects.vercel.app',
 ];
