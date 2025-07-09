@@ -217,56 +217,63 @@ app.post('/api/analyze-xray', async (req, res) => {
     // Log the first few characters of the base64 data for debugging
     console.log('Base64 data preview:', base64Data.substring(0, 50) + '...');
 
-    const patientInfo = formatPatientInfo(formData);
-    console.log('Formatted patient info:', patientInfo);
-
-    // 1. First prompt: General report
-    const reportRequest = {
+    // 1. First prompt: Image Analysis only
+    const imageAnalysisRequest = {
       contents: [
         {
           role: 'user',
           parts: [
-            { text: `You are a dental surgeon and radiography expert. Create a detailed report for the provided dental X-ray. Focus on identifying specific conditions and problems. Patient Info:\n${patientInfo}` },
+            { text: `You are a dental radiography expert. Analyze the following dental X-ray image and describe all visible findings, abnormalities, and observations. Do NOT provide a diagnosis or treatment yet.` },
             { inlineData: { mimeType: 'image/jpeg', data: base64Data } }
           ],
         },
       ],
     };
-    const reportResponse = await generativeVisionModel.generateContent(reportRequest, {
+    const imageAnalysisResponse = await generativeVisionModel.generateContent(imageAnalysisRequest, {
       generationConfig: {
         temperature: 0.2,
         topP: 0.8
       }
     });
-    if (!reportResponse.response || !reportResponse.response.candidates || reportResponse.response.candidates.length === 0) {
-      throw new Error('No response candidates received from the model.');
-    }
-    const generalReport = reportResponse.response.candidates[0]?.content?.parts?.[0]?.text || 'No valid content received.';
+    const imageAnalysis = imageAnalysisResponse.response?.candidates?.[0]?.content?.parts?.[0]?.text || 'No valid content received.';
 
-    // 2. Second prompt: Extract disease name and match with antibiotics data
-    const diseaseRequest = {
+    // 2. Second prompt: Diagnosis using image analysis + medical history
+    const diagnosisRequest = {
       contents: [
         {
           role: 'user',
           parts: [
-            { text: `Based on the following dental report, identify the most likely dental disease or condition. Here is the list of possible conditions and their treatments:\n\n${JSON.stringify(dentalAntibiotics, null, 2)}\n\nDental Report:\n${generalReport}\n\nRespond with ONLY the exact disease name from the list above that best matches the condition described in the report.If any match is found then provide the treatment for that disease based on the list above. If no exact match is found, respond with "No exact match found".Provide in the markdown format.` }
+            { text: `Given the following image analysis:\n${imageAnalysis}\n\nAnd the following patient medical and dental history:\n${formatPatientInfo(formData)}\n\nIdentify the most likely dental disease or condition from this list:\n${JSON.stringify(dentalAntibiotics, null, 2)}\n\nRespond with ONLY the exact disease name from the list above that best matches the findings. If no match, respond \"No exact match found\". Provide a short reasoning for your choice.` }
           ],
         },
       ],
     };
-    const diseaseResponse = await generativeVisionModel.generateContent(diseaseRequest, {
+    const diagnosisResponse = await generativeVisionModel.generateContent(diagnosisRequest, {
       generationConfig: {
         temperature: 0.2,
         topP: 0.8
       }
     });
-    if (!diseaseResponse.response || !diseaseResponse.response.candidates || diseaseResponse.response.candidates.length === 0) {
-      throw new Error('No response candidates received for disease extraction.');
-    }
-    const diseaseName = diseaseResponse.response.candidates[0]?.content?.parts?.[0]?.text?.trim();
+    const diagnosisText = diagnosisResponse.response?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
 
-    // 3. Extract treatment information
-    const treatmentInfo = diseaseResponse.response.candidates[0]?.content?.parts?.[0]?.text?.trim();
+    // 3. Third prompt: Prescription using diagnosis
+    const prescriptionRequest = {
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: `Given the diagnosis: ${diagnosisText}\n\nSelect the best prescription/treatment from the following list:\n${JSON.stringify(dentalAntibiotics, null, 2)}\n\nProvide the treatment plan and a short reasoning for your choice.` }
+          ],
+        },
+      ],
+    };
+    const prescriptionResponse = await generativeVisionModel.generateContent(prescriptionRequest, {
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.8
+      }
+    });
+    const prescriptionText = prescriptionResponse.response?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
 
     // 4. Update patient record
     if (formData.patientId) {
@@ -274,12 +281,12 @@ app.post('/api/analyze-xray', async (req, res) => {
         .from('patients')
         .update({
           analysis: JSON.stringify({
-            disease: diseaseName,
-            treatment: treatmentInfo,
-            report: generalReport,
+            image_analysis: imageAnalysis,
+            diagnosis: diagnosisText,
+            prescription: prescriptionText,
             timestamp: new Date().toISOString()
           }),
-          treatment: JSON.stringify(treatmentInfo)
+          treatment: JSON.stringify(prescriptionText)
         })
         .eq('patient_id', formData.patientId);
 
@@ -293,8 +300,9 @@ app.post('/api/analyze-xray', async (req, res) => {
 
     // 6. Respond
     res.json({
-      report: generalReport,
-      disease: diseaseName
+      image_analysis: imageAnalysis,
+      diagnosis: diagnosisText,
+      prescription: prescriptionText
     });
   } catch (error) {
     console.error('Error generating dental report:', {
