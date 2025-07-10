@@ -301,8 +301,8 @@ app.post('/api/analyze-xray', async (req, res) => {
     // 6. Respond
     res.json({
       image_analysis: imageAnalysis,
-      diagnosis: diagnosisText,
-      prescription: prescriptionText
+      report: diagnosisText,
+      disease: prescriptionText
     });
   } catch (error) {
     console.error('Error generating dental report:', {
